@@ -129,17 +129,17 @@ extern byte I2C_LCD_MASTER_ADDRESS;     //0x27  //if Set I2C Address by OpenVFO 
 //==============================================================================
 //#Digital & ANALOG pins OpenVFO Board Teensy 4.0
 //D0 &D1 = RX1/TX1/Serial1
-#define CW_KEY        (2)
+#define CW_KEY        (2)   //CW key jack
 #define TX_LPF_C      (3)   //Relay 
 #define TX_LPF_B      (4)   //Relay
 #define TX_LPF_A      (5)   //Relay
-#define CW_TONE       (6)
+#define CW_TONE       (6)	// Generate CW Tone
 #define TX_RX         (7)   //Relay
-#define DIGITAL_SPARE  (8) 
-#define DIGITAL_SPARE  (9)
-#define DIGITAL_SPARE  (10)
-#define DIGITAL_SPARE  (11)
-#define DIGITAL_SPARE  (12)
+//#define PRE_AMP       (8)  //PreAmp power relay
+//#define AGC		      (9)  //Agc circut power relay
+//#define MUTE          (10)  //Mute circut power relay
+//#define AMP_KEY       (11) //AMP_KEY relay for keying ext amp
+//#define ANT_SEL       (12) //Antenna 1/2 Select Relay
 //#define DIGITAL_SPARE  (13)//LED pin 
 //#Analog to be converted to digital
 #define ENC_A         (A0) //D14
@@ -149,8 +149,8 @@ extern byte I2C_LCD_MASTER_ADDRESS;     //0x27  //if Set I2C Address by OpenVFO 
 //*Note: A4/D18/SDA0, A5/D19/SCL0 are wired to the Si5351 as I2C interface 
 #define ANALOG_KEYER  (A6) //D20
 #define ANALOG_SMETER (A7) //D21
-#define ANALOG_DIGITAL_SPARE  (A8) //D22
-#define ANALOG_DIGITAL_SPARE  (A9) //D23
+//#define ANALOG_DIGITAL_SPARE  (A8) //D22
+//#define ANALOG_DIGITAL_SPARE  (A9) //D23
 //^Note pins from underside of Teensy 4.0
 // OpenVFO PRO Board 
 // Uncomment them as needed for the pro board
