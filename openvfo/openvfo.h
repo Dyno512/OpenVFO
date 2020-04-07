@@ -23,18 +23,16 @@
 // Compile Option
 //==============================================================================
 //OpenVFO Board Version
-#define OPENVFO_BOARD_VERSION 4          //v1 ~ v4 : 4, v5: 5
+#define OPENVFO_BOARD_VERSION           //v1 ~ v4 : 4, v5: 5
 
 //Depending on the type of LCD mounted on the OpenVFO, uncomment one of the options below.
 //You must select only one.
 //#define OPENVFO_DISPLAY_LCD1602I        //I2C type 16 x 02 LCD
-//#define OPENVFO_DISPLAY_LCD1602I_DUAL   //I2C type 16 x02 LCD Dual
 //#define OPENVFO_DISPLAY_LCD2004I        //I2C type 24 x 04 LCD
 #define OPENVFO_DISPLAY_NEXTION         //NEXTION LCD
 
 //#define OPENVFO_DISPLAY_NEXTION_SAFE      //Only EEProm Write 770~775
 #define I2C_LCD_MASTER_ADDRESS_DEFAULT  0x27     //0x27  //DEFAULT, if Set I2C Address by OpenVFO Manager, read from EEProm
-#define I2C_LCD_SECOND_ADDRESS_DEFAULT  0x3F     //0x27  //only using Dual LCD Mode
 
 //Select betwen Analog S-Meter and DSP (I2C) Meter
 #define USE_I2C_SMETER
@@ -50,7 +48,6 @@
 #define ENABLE_ADCMONITOR               //Starting with Version 1.07, you can read ADC values directly from OpenVFO Manager. So this function is not necessary.
 
 extern byte I2C_LCD_MASTER_ADDRESS;     //0x27  //if Set I2C Address by OpenVFO Manager, read from EEProm
-extern byte I2C_LCD_SECOND_ADDRESS;     //only using Dual LCD Mode
 #define SMeterLatency   3               //1 is 0.25 sec
 
 //==============================================================================
@@ -112,8 +109,6 @@ extern byte I2C_LCD_SECOND_ADDRESS;     //only using Dual LCD Mode
 
 #ifdef OPENVFO_DISPLAY_LCD1602I
   #define USE_I2C_LCD
-#elif defined(OPENVFO_DISPLAY_LCD1602I_DUAL)
-  #define USE_I2C_LCD
 #elif defined(OPENVFO_DISPLAY_LCD2004I)
   #define USE_I2C_LCD
 #endif
@@ -132,55 +127,43 @@ extern byte I2C_LCD_SECOND_ADDRESS;     //only using Dual LCD Mode
 //==============================================================================
 // Hardware, Define PIN Usage
 //==============================================================================
-/**
- * We need to carefully pick assignment of pin for various purposes.
- * There are two sets of completely programmable pins on the Raduino.
- * First, on the top of the board, in line with the LCD connector is an 8-pin connector
- * that is largely meant for analog inputs and front-panel control. It has a regulated 5v output,
- * ground and six pins. Each of these six pins can be individually programmed 
- * either as an analog input, a digital input or a digital output. 
- * The pins are assigned as follows (left to right, display facing you): 
- *      Pin 1 (Violet), A7, SPARE => Analog S-Meter
- *      Pin 2 (Blue),   A6, KEYER (DATA)
- *      Pin 3 (Green), +5v 
- *      Pin 4 (Yellow), Gnd
- *      Pin 5 (Orange), A3, PTT
- *      Pin 6 (Red),    A2, F BUTTON
- *      Pin 7 (Brown),  A1, ENC B
- *      Pin 8 (Black),  A0, ENC A
- *Note: A5, A4 are wired to the Si5351 as I2C interface 
- *       *     
- * Though, this can be assigned anyway, for this application of the Arduino, we will make the following
- * assignment
- * A2 will connect to the PTT line, which is the usually a part of the mic connector
- * A3 is connected to a push button that can momentarily ground this line. This will be used for RIT/Bandswitching, etc.
- * A6 is to implement a keyer, it is reserved and not yet implemented
- * A7 is connected to a center pin of good quality 100K or 10K linear potentiometer with the two other ends connected to
- * ground and +5v lines available on the connector. This implments the tuning mechanism
- */
-#define ENC_A         (A0)
-#define ENC_B         (A1)
-#define FBUTTON       (A2)
-#define PTT           (A3)
-#define ANALOG_KEYER  (A6)
-#define ANALOG_SMETER (A7)
-//#define UNDEFINED     (A8)
-//#define UNDEFINED     (A9)
-/** 
- *  The second set of 16 pins on the Raduino's bottom connector are have the three clock outputs and the digital lines to control the rig.
- *  This assignment is as follows :
- *    Pin   1   2    3    4    5    6    7    8    9    10   11   12   13   14   15   16
- *         GND +5V CLK2  GND  GND  CLK1 GND  GND  CLK0  GND  D2   D3   D4   D5   D6   D7  
- *  These too are flexible with what you may do with them, for the Raduino, we use them to :
- *  - TX_RX line : Switches between Transmit and Receive after sensing the PTT or the morse keyer
- *  - CW_KEY line : turns on the carrier for CW
- */
-#define TX_RX         (7)   //Relay
-#define CW_TONE       (6)
-#define TX_LPF_A      (5)   //Relay
-#define TX_LPF_B      (4)   //Relay
-#define TX_LPF_C      (3)   //Relay
+//#Digital & ANALOG pins OpenVFO Board Teensy 4.0
+//D0 &D1 = RX1/TX1/Serial1
 #define CW_KEY        (2)
+#define TX_LPF_C      (3)   //Relay 
+#define TX_LPF_B      (4)   //Relay
+#define TX_LPF_A      (5)   //Relay
+#define CW_TONE       (6)
+#define TX_RX         (7)   //Relay
+#define DIGITAL_SPARE  (8) 
+#define DIGITAL_SPARE  (9)
+#define DIGITAL_SPARE  (10)
+#define DIGITAL_SPARE  (11)
+#define DIGITAL_SPARE  (12)
+//#define DIGITAL_SPARE  (13)//LED pin 
+//#Analog to be converted to digital
+#define ENC_A         (A0) //D14
+#define ENC_B         (A1) //D15
+#define FBUTTON       (A2) //D16
+#define PTT           (A3) //D17
+//*Note: A4/D18/SDA0, A5/D19/SCL0 are wired to the Si5351 as I2C interface 
+#define ANALOG_KEYER  (A6) //D20
+#define ANALOG_SMETER (A7) //D21
+#define ANALOG_DIGITAL_SPARE  (A8) //D22
+#define ANALOG_DIGITAL_SPARE  (A9) //D23
+//^Note pins from underside of Teensy 4.0
+// OpenVFO PRO Board 
+// Uncomment them as needed for the pro board
+//#define ANALOG_DIGITAL_SPARE  (A10) //D24
+//#define ANALOG_DIGITAL_SPARE  (A11) //D25
+//#define ANALOG_DIGITAL_SPARE  (A12) //D26
+//#define ANALOG_DIGITAL_SPARE  (A13) //D27
+//#define DIGITAL_SPARE  (28)
+//#define DIGITAL_SPARE  (29)
+//#define DIGITAL_SPARE  (30)
+//#define DIGITAL_SPARE  (31)
+//#define DIGITAL_SPARE  (32)
+//#define DIGITAL_SPARE  (33)
 
 //******************************************************
 //DSP (I2C) Meter 
@@ -276,7 +259,7 @@ extern char byteToChar(byte srcByte);
 extern void DisplayCallsign(byte callSignLength);
 extern void DisplayVersionInfo(const char* fwVersionInfo);
 
-//I2C Signal Meter, Version 1.097
+//I2C Signal Meter,
 extern int GetI2CSmeterValue(int valueType);  //openvfo_ui.ino
 
 #endif    //end of if header define
