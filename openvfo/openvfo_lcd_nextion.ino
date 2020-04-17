@@ -23,14 +23,13 @@
 #include "openvfo_lcd.h"
 
 // set this to the hardware serial port you wish to use
-#define HWSERIAL Serial1 // hardware serial port 1-6
+#define HWSerial Serial1 // hardware serial port 1-6
 //======================================================================== 
 //Begin of Nextion LCD Library by OPENVFO-Consortium
 //========================================================================
 #ifdef OPENVFO_DISPLAY_NEXTION
 /*************************************************************************
   Nextion Library for OPENVFO
-  OPENVFO-Consortium
 **************************************************************************/
 extern void HWSerial.begin(long speedBaud);
 extern void HWSerial.write(uint16_t b);
@@ -683,7 +682,7 @@ void sendResponseData(int protocolType, unsigned long startFreq, unsigned int se
   for (int si = 0; si < sendCount; si++)
   {
     for (int i = 0; i < 11; i++)
-      HWSERIAL.write(ResponseHeader[i]);
+      HWSerial.write(ResponseHeader[i]);
       
     for (k = 0; k < readCount; k ++)
     {
@@ -721,12 +720,12 @@ void sendResponseData(int protocolType, unsigned long startFreq, unsigned int se
 
       if (protocolType == RESPONSE_EEPROM && sendOption2 == RESPONSE_EEPROM_STR) //None HEX
       {
-        HWSERIAL.write(readedValue);
+        HWSerial.write(readedValue);
       }
       else
       {
-        HWSERIAL.write(HexCodes[readedValue >> 4]);
-        HWSERIAL.write(HexCodes[readedValue & 0xf]);
+        HWSerial.write(HexCodes[readedValue >> 4]);
+        HWSerial.write(HexCodes[readedValue & 0xf]);
       }
     }
     
@@ -751,7 +750,7 @@ void HWS_Process(void)
   //Received Command from touch screen
   if (receivedCommandLength > 0)
   {
-    sSerial.read(swr_buffer);
+    HWSerial.read(swr_buffer);
 
     int8_t comandLength = receivedCommandLength;
     int8_t commandStartIndex = -1;
@@ -1050,19 +1049,19 @@ void SendUbitxData(void)
   /*
   //Frequency of Bands
   for (int i = 0; i < 11; i++)
-    HWSERIAL.write(SpectrumHeader[i]);
+    HWSerial.write(SpectrumHeader[i]);
 
   byte *tmpByte;
   tmpByte = (byte *)hamBandRange;
   for (byte i = 0; i < (useHamBandCount -1) * 4; i++) 
   {
-    HWSERIAL.write(HexCodes[*tmpByte >> 4]);
-    HWSERIAL.write(HexCodes[*tmpByte & 0xf]);
+    HWSerial.write(HexCodes[*tmpByte >> 4]);
+    HWSerial.write(HexCodes[*tmpByte & 0xf]);
     tmpByte++;
   }
       
   for (int i = 0; i < 4; i++)
-    HWSERIAL.write(SpectrumFooter[i]);
+    HWSerial.write(SpectrumFooter[i]);
   */    
     
   //Complte Send Info

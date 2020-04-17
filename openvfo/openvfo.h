@@ -23,7 +23,7 @@
 // Compile Option
 //==============================================================================
 //OpenVFO Board Version
-#define OPENVFO_BOARD_VERSION           //v1 ~ v4 : 4, v5: 5
+#define OPENVFO_BOARD_VERSION  2         //v1 ~ v4 : 4, v5: 5
 
 //Depending on the type of LCD mounted on the OpenVFO, uncomment one of the options below.
 //You must select only one.

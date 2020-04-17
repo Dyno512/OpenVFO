@@ -69,13 +69,13 @@
 
   //==============================================================================================================================
   //For Test // V1.200 V1.122  45002500 (LSB), 45002000 (USB) (Change Default BFO Frequency 11056xxx, adjust bfo and ifshift ), abs: 0.5k
-  //Best, Test 3 OpenVFO V5
   //Last Value, If more data is collected, it can be changed to a better value.
   #define SECOND_OSC_USB (56058700l)
   #define SECOND_OSC_LSB (33945800l) 
 
   //Not used, Just comment (Default)
   #define INIT_USB_FREQ   (11056500l)
+  //#define INIT_USB_FREQ   (998700) //initial (uncalibrated) BFO frequency 10M(Hz)
   //-----------------------------------------------------------------------------------------------------------------------------
 #else
   #define SECOND_OSC_USB (56995000l)
@@ -83,16 +83,17 @@
   //these are the two default USB and LSB frequencies. The best frequencies depend upon your individual taste and filter shape
   //Not used, Just comment (Default)
   #define INIT_USB_FREQ   (11996500l)
+  //#define INIT_USB_FREQ   (998700) //initial (uncalibrated) BFO frequency 10M(Hz)
 #endif
   
 
 // limits the tuning and working range of the openvfo between 3 MHz and 30 MHz
 #define LOWEST_FREQ  (3000000l)
-#define HIGHEST_FREQ (30000000l)
+#define HIGHEST_FREQ (55000000l)
 
-//When the frequency is moved by the dial, the maximum value by OPENVFO-Consortium
+//When the frequency is moved by the dial, the maximum value by OPENVFO
 #define LOWEST_FREQ_DIAL  (3000l)
-#define HIGHEST_FREQ_DIAL (60000000l)
+#define HIGHEST_FREQ_DIAL (55000000l)
 
 char ritOn = 0;
 char vfoActive = VFO_A;

@@ -6,10 +6,13 @@ add code for following pins
 #define AMP_KEY             (11) //AMP_KEY relay for keying ext amp
 #define ANTENNA_SELECT      (12) //Antenna 1/2 Select Relay
 
-add code for:
+add code for arduino:
 
  1)locking the relay for antenna 1 or 2 selection
  2)add new modes digu am fm
  3)rewrite rit to use slider +/- 1hz to 5kh
  4)antenna 1/2 relay lock
 
+add code screen :
+ rx 1/2  tx 1/2 buttons
+ 
