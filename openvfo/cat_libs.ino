@@ -1,5 +1,5 @@
 /*************************************************************************
-  OPENVFO-Consortium's CAT Library for OpenVFO and HAM
+  CAT Library for OpenVFO and HAM
   This source code is written for OpenVFO, but it can also be used on other radios.
   
   The CAT protocol is used by many radios to provide remote control to comptuers through

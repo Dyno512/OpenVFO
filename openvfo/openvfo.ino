@@ -106,7 +106,7 @@ unsigned int cwSpeed = 100; //this is actuall the dot period in milliseconds
 extern int32_t calibration;
 
 //for store the mode in eeprom
-byte vfoA_mode=0, vfoB_mode = 0;          //0: default, 1:not use, 2:LSB, 3:USB, 4:CW, 5:AM, 6:FM
+byte vfoA_mode=0, vfoB_mode = 0;          //0: default, 1:not use, 2:LSB, 3:USB, 4:CWL, 5:CWU, 6:AM, 7:FM, 8:DIGU
 byte vfoA_mode_eeprom, vfoB_mode_eeprom;  //for protect eeprom life
 
 //OPENVFO
@@ -793,9 +793,10 @@ void checkButton(){
 #endif
 
 /************************************
-Replace function by OPENVFO-Consortium
+Replace function 
 prevent error controls
-applied Threshold for reduct errors,  dial Lock, dynamic Step
+applied Threshold for reduct errors,  
+dial Lock, dynamic Step
  *************************************/
 byte threshold = 2;  //noe action for count
 unsigned long lastEncInputtime = 0;
@@ -1260,8 +1261,8 @@ void initPorts(){
   pinMode(FBUTTON, INPUT_PULLUP);
   
   //configure the function button to use the external pull-up
-//  pinMode(FBUTTON, INPUT);
-//  digitalWrite(FBUTTON, HIGH);
+  //pinMode(FBUTTON, INPUT);
+  //digitalWrite(FBUTTON, HIGH);
 
   pinMode(PTT, INPUT_PULLUP);
   pinMode(ANALOG_KEYER, INPUT_PULLUP);
