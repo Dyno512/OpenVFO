@@ -195,12 +195,12 @@ byte L_displayOption2;            //byte displayOption2 (Reserve)
 #define TS_CMD_SWTRIG        21 //SW Action Trigger for WSPR and more
 #define TS_CMD_READMEM       31 //Read EEProm
 #define TS_CMD_WRITEMEM      32 //Write EEProm
-#define TS_CMD_LOOPBACK0     74 //Loopback1 (Response to Loopback Channgel)
-#define TS_CMD_LOOPBACK1     75 //Loopback2 (Response to Loopback Channgel)
-#define TS_CMD_LOOPBACK2     76 //Loopback3 (Response to Loopback Channgel)
-#define TS_CMD_LOOPBACK3     77 //Loopback4 (Response to Loopback Channgel)
-#define TS_CMD_LOOPBACK4     78 //Loopback5 (Response to Loopback Channgel)
-#define TS_CMD_LOOPBACK5     79 //Loopback6 (Response to Loopback Channgel)
+#define TS_CMD_LOOPBACK0     74 //Loopback1 (Response to Loopback channel)
+#define TS_CMD_LOOPBACK1     75 //Loopback2 (Response to Loopback channel)
+#define TS_CMD_LOOPBACK2     76 //Loopback3 (Response to Loopback channel)
+#define TS_CMD_LOOPBACK3     77 //Loopback4 (Response to Loopback channel)
+#define TS_CMD_LOOPBACK4     78 //Loopback5 (Response to Loopback channel)
+#define TS_CMD_LOOPBACK5     79 //Loopback6 (Response to Loopback channel)
 #define TS_CMD_FACTORYRESET  85 //Factory Reset
 #define TS_CMD_OPENVFO_REBOOT  95 //Reboot
 
