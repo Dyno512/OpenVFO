@@ -127,7 +127,7 @@ void menuBand(int btn){
 
 //Convert Mode, Number by OPENVFO-Consortium
 //0: default, 1:not use, 2:LSB, 3:USB, 4:CWL, 5:CWU, 6:AM, 7:FM, 8:DIGU
-:byte modeToByte(){
+byte modeToByte(){
   if (cwMode == 0)
   {
     if (isUSB)

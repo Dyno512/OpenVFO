@@ -28,8 +28,8 @@
 //Depending on the type of LCD mounted on the OpenVFO, uncomment one of the options below.
 //You must select only one.
 //#define OPENVFO_DISPLAY_LCD1602I        //I2C type 16 x 02 LCD
-//#define OPENVFO_DISPLAY_LCD2004I        //I2C type 24 x 04 LCD
-#define OPENVFO_DISPLAY_NEXTION         //NEXTION LCD
+#define OPENVFO_DISPLAY_LCD2004I        //I2C type 24 x 04 LCD
+//#define OPENVFO_DISPLAY_NEXTION         //NEXTION LCD
 
 //#define OPENVFO_DISPLAY_NEXTION_SAFE      //Only EEProm Write 770~775
 #define I2C_LCD_MASTER_ADDRESS_DEFAULT  0x27     //0x27  //DEFAULT, if Set I2C Address by OpenVFO Manager, read from EEProm

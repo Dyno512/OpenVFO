@@ -24,6 +24,17 @@
 
 // set this to the hardware serial port you wish to use
 #define HWSerial Serial1 // hardware serial port 1-6
+unsigned long baud = 19200;
+const int led_pin = 13;
+
+//Configure serial
+void serial_setup()
+{
+  pinMode(led_pin, OUTPUT);
+  digitalWrite(led_pin, LOW);
+  Serial.begin(baud);  // USB, communication to PC or Mac
+  HWSerial.begin(baud); // communication to hardware serial
+}
 //======================================================================== 
 //Begin of Nextion LCD Library by OPENVFO-Consortium
 //========================================================================
@@ -31,11 +42,11 @@
 /*************************************************************************
   Nextion Library for OPENVFO
 **************************************************************************/
-extern void HWSerial.begin(long speedBaud);
-extern void HWSerial.write(uint16_t b);
-extern int HWSerial.available(void);
-extern int HWSerial.read(void);
-extern void HWSerial.print(uint16_t *b);
+void HWSerial.begin(long baud);
+void HWSerial.write(uint16_t b);
+int HWSerial.available(void);
+int HWSerial.read(void);
+void HWSerial.print(uint16_t *b);
 
 #define TEXT_LINE_LENGTH 20
 char softBuffLines[2][TEXT_LINE_LENGTH + 1];
@@ -741,7 +752,7 @@ int spectrumOffset = 0;    //offset position
 int spectrumScanCount = 100;  //Maximum 200
 unsigned int spectrumIncStep = 1000;   //Increaase Step
 extern uint8_t receivedCommandLength;
-extern void Serial.read(uint8_t * receive_cmdBuffer);
+extern void HWSerial.read(uint8_t * receive_cmdBuffer);
 uint8_t swr_buffer[20];
 
 //HardwareSerial_Process
