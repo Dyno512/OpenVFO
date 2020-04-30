@@ -21,13 +21,14 @@
 #include <Arduino.h>
 #include "openvfo.h"
 #include "openvfo_lcd.h"
-#include "HardwareSerial.h"
+#include <HardwareSerial.h>
 
 // set this to the hardware serial port you wish to use
+#define _SS_MAX_RX_BUFF 35 // RX buffer size
 #define HWSERIAL Serial1 // hardware serial port 1-6
 #define HWSERIAL_TX_BUFFER_SIZE     64
 #define HWSERIAL_RX_BUFFER_SIZE     64
-#define _SS_MAX_RX_BUFF 35 // RX buffer size
+
 #define PRINT_MAX_LENGTH 30
 unsigned long baud = 19200;
 
@@ -50,7 +51,6 @@ void HWSERIAL.write(uint16_t b);
 int HWSERIAL.available(void);
 int HWSERIAL.read(void);
 void HWSERIAL.print(uint16_t *b);
-
 
 #define TEXT_LINE_LENGTH 20
 char softBuffLines[2][TEXT_LINE_LENGTH + 1];

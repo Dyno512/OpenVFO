@@ -1355,7 +1355,7 @@ void setup()
     
 #endif  
   
-  //HWHWSERIAL.begin(9600);
+  //HWbegin(9600);
   LCD_Init();
   //printLineF(1, FIRMWARE_VERSION_INFO);
   DisplayVersionInfo(FIRMWARE_VERSION_INFO);

@@ -2,7 +2,7 @@ ToDO:
 add code for following pins
 #define PRE_AMP  on/off     (8)  //PreAmp power relay
 #define AGC	on/off	        (9)  //Agc circut power relay
-#define MUTE on/off         (10) //Mute circut power relay
+#define NB on/off         (10) //NB circut power relay
 #define AMP_KEY             (11) //AMP_KEY relay for keying ext amp
 #define ANTENNA_SELECT      (12) //Antenna 1/2 Select Relay
 
