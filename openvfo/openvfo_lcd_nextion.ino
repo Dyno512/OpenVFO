@@ -21,19 +21,21 @@
 #include <Arduino.h>
 #include "openvfo.h"
 #include "openvfo_lcd.h"
+#include "HardwareSerial.h"
 
 // set this to the hardware serial port you wish to use
 #define HWSerial Serial1 // hardware serial port 1-6
+#define HWSerial_TX_BUFFER_SIZE     64
+#define HWSerial_RX_BUFFER_SIZE     64
+#define _SS_MAX_RX_BUFF 35 // RX buffer size
+#define PRINT_MAX_LENGTH 30
 unsigned long baud = 19200;
-const int led_pin = 13;
 
 //Configure serial
 void serial_setup()
 {
-  pinMode(led_pin, OUTPUT);
-  digitalWrite(led_pin, LOW);
   Serial.begin(baud);  // USB, communication to PC or Mac
-  HWSerial.begin(baud); // communication to hardware serial
+  HWSerial.begin(9600, SERIAL_8N1); // communication to hardware serial
 }
 //======================================================================== 
 //Begin of Nextion LCD Library by OPENVFO-Consortium
@@ -47,6 +49,7 @@ void HWSerial.write(uint16_t b);
 int HWSerial.available(void);
 int HWSerial.read(void);
 void HWSerial.print(uint16_t *b);
+static uint8_t swr_receive_buffer[_SS_MAX_RX_BUFF];
 
 #define TEXT_LINE_LENGTH 20
 char softBuffLines[2][TEXT_LINE_LENGTH + 1];
@@ -59,7 +62,7 @@ char softTemp[20];
 
 void LCDNextion_Init()
 {
-  HWSerial.begin(9600);
+  HWSerial.begin(9600, SERIAL_8N1);
   memset(softBuffLines[0], ' ', TEXT_LINE_LENGTH); 
   softBuffLines[0][TEXT_LINE_LENGTH + 1] = 0x00;
   memset(softBuffLines[1], ' ', TEXT_LINE_LENGTH);
