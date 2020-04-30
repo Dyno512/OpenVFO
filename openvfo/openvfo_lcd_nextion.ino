@@ -24,9 +24,9 @@
 #include "HardwareSerial.h"
 
 // set this to the hardware serial port you wish to use
-#define HWSerial Serial1 // hardware serial port 1-6
-#define HWSerial_TX_BUFFER_SIZE     64
-#define HWSerial_RX_BUFFER_SIZE     64
+#define HWSERIAL Serial1 // hardware serial port 1-6
+#define HWSERIAL_TX_BUFFER_SIZE     64
+#define HWSERIAL_RX_BUFFER_SIZE     64
 #define _SS_MAX_RX_BUFF 35 // RX buffer size
 #define PRINT_MAX_LENGTH 30
 unsigned long baud = 19200;
@@ -34,8 +34,8 @@ unsigned long baud = 19200;
 //Configure serial
 void serial_setup()
 {
-  Serial.begin(baud);  // USB, communication to PC or Mac
-  HWSerial.begin(9600, SERIAL_8N1); // communication to hardware serial
+  HWSERIAL.begin(baud);  // USB, communication to PC or Mac
+  HWSERIAL.begin(9600, SERIAL_8N1); // communication to hardware serial
 }
 //======================================================================== 
 //Begin of Nextion LCD Library by OPENVFO-Consortium
@@ -44,12 +44,13 @@ void serial_setup()
 /*************************************************************************
   Nextion Library for OPENVFO
 **************************************************************************/
-void HWSerial.begin(long baud);
-void HWSerial.write(uint16_t b);
-int HWSerial.available(void);
-int HWSerial.read(void);
-void HWSerial.print(uint16_t *b);
 static uint8_t swr_receive_buffer[_SS_MAX_RX_BUFF];
+void HWSERIAL.begin(long baud);
+void HWSERIAL.write(uint16_t b);
+int HWSERIAL.available(void);
+int HWSERIAL.read(void);
+void HWSERIAL.print(uint16_t *b);
+
 
 #define TEXT_LINE_LENGTH 20
 char softBuffLines[2][TEXT_LINE_LENGTH + 1];
@@ -62,11 +63,13 @@ char softTemp[20];
 
 void LCDNextion_Init()
 {
-  HWSerial.begin(9600, SERIAL_8N1);
+  if (HWSERIAL.available() > 0) {
+  HWSERIAL.begin(9600, SERIAL_8N1);
   memset(softBuffLines[0], ' ', TEXT_LINE_LENGTH); 
   softBuffLines[0][TEXT_LINE_LENGTH + 1] = 0x00;
   memset(softBuffLines[1], ' ', TEXT_LINE_LENGTH);
   softBuffLines[1][TEXT_LINE_LENGTH + 1] = 0x00;
+ }
 }
 
 void LCD_Init(void)
@@ -236,13 +239,13 @@ void SendHeader(char varType, char varIndex)
   {
     softSTRHeader[4] = varIndex;
     for (int i = 0; i < 11; i++)
-      HWSerial.write(softSTRHeader[i]);
+      HWSERIAL.write(softSTRHeader[i]);
   }
   else
   {
     softINTHeader[4] = varIndex;
     for (int i = 0; i < 10; i++)
-      HWSerial.write(softINTHeader[i]);
+      HWSERIAL.write(softINTHeader[i]);
   }
 }
 
@@ -258,16 +261,16 @@ void SendCommandETX(char etxType)
 {
   if (etxType == 2)
   {
-    HWSerial.print(softTemp);
+    HWSERIAL.print(softTemp);
   }
   else if (etxType == 1)
   {
-    HWSerial.print("\"");
+    HWSERIAL.print("\"");
   }
   
-  HWSerial.write(0xff);
-  HWSerial.write(0xff);
-  HWSerial.write(0xff);
+  HWSERIAL.write(0xff);
+  HWSERIAL.write(0xff);
+  HWSERIAL.write(0xff);
 }
 
 void SendCommandUL(char varIndex, unsigned long sendValue)
@@ -292,7 +295,7 @@ void SendCommandStr(char varIndex, char* sendValue)
 {
   SendHeader(HWS_HEADER_STR_TYPE, varIndex);
   
-  HWSerial.print(sendValue);
+  HWSERIAL.print(sendValue);
   SendCommandETX(STR_ETX);
 }
 
@@ -304,7 +307,7 @@ void SendTextLineBuff(char lineNumber)
   {
     SendHeader(HWS_HEADER_STR_TYPE, lineNumber + 0x30);  //s0.txt, s1.txt
   
-    HWSerial.print(softBuffLines[lineNumber]);
+    HWSERIAL.print(softBuffLines[lineNumber]);
     SendCommandETX(STR_ETX);
     
     strcpy(softBuffSended[lineNumber], softBuffLines[lineNumber]);
@@ -337,7 +340,7 @@ void SendEEPromData(char varIndex, int eepromStartIndex, int eepromEndIndex, cha
   
   for (int i = eepromStartIndex; i <= eepromEndIndex; i++)
   {
-      HWSerial.write(EEPROM.read((offsetTtype == 0 ? USER_CALLSIGN_DAT : WSPR_MESSAGE1) + i));
+      HWSERIAL.write(EEPROM.read((offsetTtype == 0 ? USER_CALLSIGN_DAT : WSPR_MESSAGE1) + i));
   }
 
   SendCommandETX(STR_ETX);
@@ -350,7 +353,7 @@ void SendCommand1Num(char varType, char sendValue) //0~9 : Mode, nowDisp, Active
   softBuff1Num[10] = sendValue + 0x30;
 
   for (int i = 0; i < 14; i++)
-    HWSerial.write(softBuff1Num[i]);
+    HWSERIAL.write(softBuff1Num[i]);
 }
 
 void SetActivePage(char newPageIndex)
@@ -696,7 +699,7 @@ void sendResponseData(int protocolType, unsigned long startFreq, unsigned int se
   for (int si = 0; si < sendCount; si++)
   {
     for (int i = 0; i < 11; i++)
-      HWSerial.write(ResponseHeader[i]);
+      HWSERIAL.write(ResponseHeader[i]);
       
     for (k = 0; k < readCount; k ++)
     {
@@ -734,12 +737,12 @@ void sendResponseData(int protocolType, unsigned long startFreq, unsigned int se
 
       if (protocolType == RESPONSE_EEPROM && sendOption2 == RESPONSE_EEPROM_STR) //None HEX
       {
-        HWSerial.write(readedValue);
+        HWSERIAL.write(readedValue);
       }
       else
       {
-        HWSerial.write(HexCodes[readedValue >> 4]);
-        HWSerial.write(HexCodes[readedValue & 0xf]);
+        HWSERIAL.write(HexCodes[readedValue >> 4]);
+        HWSERIAL.write(HexCodes[readedValue & 0xf]);
       }
     }
     
@@ -755,7 +758,7 @@ int spectrumOffset = 0;    //offset position
 int spectrumScanCount = 100;  //Maximum 200
 unsigned int spectrumIncStep = 1000;   //Increaase Step
 extern uint8_t receivedCommandLength;
-extern void HWSerial.read(uint8_t * receive_cmdBuffer);
+extern void HWSERIAL.read(uint8_t * receive_cmdBuffer);
 uint8_t swr_buffer[20];
 
 //HardwareSerial_Process
@@ -764,7 +767,7 @@ void HWS_Process(void)
   //Received Command from touch screen
   if (receivedCommandLength > 0)
   {
-    HWSerial.read(swr_buffer);
+    HWSERIAL.read(swr_buffer);
 
     int8_t comandLength = receivedCommandLength;
     int8_t commandStartIndex = -1;
@@ -1063,19 +1066,19 @@ void SendUbitxData(void)
   /*
   //Frequency of Bands
   for (int i = 0; i < 11; i++)
-    HWSerial.write(SpectrumHeader[i]);
+    HWSERIAL.write(SpectrumHeader[i]);
 
   byte *tmpByte;
   tmpByte = (byte *)hamBandRange;
   for (byte i = 0; i < (useHamBandCount -1) * 4; i++) 
   {
-    HWSerial.write(HexCodes[*tmpByte >> 4]);
-    HWSerial.write(HexCodes[*tmpByte & 0xf]);
+    HWSERIAL.write(HexCodes[*tmpByte >> 4]);
+    HWSERIAL.write(HexCodes[*tmpByte & 0xf]);
     tmpByte++;
   }
       
   for (int i = 0; i < 4; i++)
-    HWSerial.write(SpectrumFooter[i]);
+    HWSERIAL.write(SpectrumFooter[i]);
   */    
     
   //Complte Send Info

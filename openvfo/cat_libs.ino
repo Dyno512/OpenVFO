@@ -31,7 +31,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 **************************************************************************/
-
+#include <Arduino.h>
 #include "openvfo.h"
 
 //for broken protocol
@@ -306,7 +306,7 @@ void WriteEEPRom(void)  //for remove warning
     {
       if (write1Byte == 0x51) //Restart
       {
-        asm volatile ("  jmp 0");
+        asm volatile ("   jmp 0");
       }
     }
     else
